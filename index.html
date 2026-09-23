@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Winter weather model command center." />
+    <title>Winter Model Command Center</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="command-center">
+      <iframe id="model-frame" title="NBM Northeast model wall" src="https://mapwall.met.psu.edu/ewall/nbm/?panel1=model=nbm;region=NE;product=totalsnow;run=0&amp;panel2=model=nbm;region=NE;product=temp;run=0&amp;panel3=model=nbm;region=NE;product=totalprecip;run=0&amp;panel4=model=nbm;region=NE;product=dew;run=0&amp;panel5=model=nbm;region=NE;product=speed10m;run=0&amp;panel6=model=nbm;region=NE;product=gust10m;run=0" referrerpolicy="strict-origin-when-cross-origin"><p>This model cannot be embedded here.</p></iframe>
+      <img id="model-image" hidden alt="Selected weather model map" />
+      <section id="loop-controls" class="loop-controls" hidden aria-label="Forecast loop controls">
+        <button id="play-button" class="play-button" type="button" aria-label="Play forecast loop">▶</button>
+        <output id="forecast-hour" for="forecast-slider">F000</output>
+        <input id="forecast-slider" type="range" min="0" max="0" value="0" step="1" aria-label="Forecast hour" />
+        <output id="frame-count" for="forecast-slider">1 / 1</output>
+        <label for="speed-control">Speed</label>
+        <select id="speed-control" aria-label="Loop speed">
+          <option value="1100">Slow</option>
+          <option value="600" selected>Normal</option>
+          <option value="280">Fast</option>
+        </select>
+      </section>
+
+      <header class="topbar">
+        <div class="active-model" aria-live="polite">
+          <strong id="active-model-name">NBM</strong>
+          <span id="active-model-phase">All timeframes</span>
+        </div>
+        <button id="info-button" class="info-button" type="button" aria-expanded="false" aria-controls="model-info" aria-label="Model information">i</button>
+      </header>
+
+      <section id="model-info" class="model-info" hidden aria-live="polite">
+        <p id="info-phase">ALL TIMEFRAMES · DECISION ANCHOR</p>
+        <h1 id="info-name">NBM</h1>
+        <p id="info-description">Keep NBM open as the ground-truth baseline. It blends many models, corrects known biases, and gives the most calibrated snowfall decision.</p>
+        <p id="info-action">Use it to anchor final accumulation expectations throughout the storm.</p>
+      </section>
+
+      <button class="dock-trigger" type="button" aria-label="Reveal model controls"></button>
+      <aside class="model-dock" aria-label="Winter model controls">
+        <div class="dock-content">
+          <p class="dock-label">WINTER MODELS</p>
+          <nav class="model-list" aria-label="Choose a weather model">
+            <button class="model-choice is-active" type="button" data-model="nbm" aria-current="true"><span>NBM</span><small>Decision anchor</small></button>
+            <button class="model-choice" type="button" data-model="ecmwf" aria-current="false"><span>ECMWF</span><small>3–10 days</small></button>
+            <button class="model-choice" type="button" data-model="aifs" aria-current="false"><span>ECMWF-AIFS</span><small>3–10 days</small></button>
+            <button class="model-choice" type="button" data-model="nam" aria-current="false"><span>NAM 3km</span><small>24–60 hours</small></button>
+            <button class="model-choice" type="button" data-model="hrrr" aria-current="false"><span>HRRR</span><small>0–18 hours</small></button>
+          </nav>
+        </div>
+      </aside>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
